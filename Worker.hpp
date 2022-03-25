@@ -8,7 +8,8 @@ namespace qt_multithread{
     Q_OBJECT
     public:
     signals:
-        void resultReady(QString result){};
+        void resultReady(QString result);
+        void statusReady(float status);
 
     public slots:
         void startWork();
@@ -22,7 +23,7 @@ namespace qt_multithread{
         std::mutex _mutex;
         std::condition_variable _cv;
 
-        virtual void doStep();
+        virtual int doStep();
 
     };
 }

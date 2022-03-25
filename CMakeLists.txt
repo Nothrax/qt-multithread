@@ -15,10 +15,10 @@ FIND_PACKAGE(Qt5 COMPONENTS Widgets REQUIRED)
 SET(QT5_MODULES Widgets)
 FIND_PACKAGE(Qt5 REQUIRED COMPONENTS ${QT5_MODULES})
 
-FILE(GLOB_RECURSE source_files "source/*")
+#[[FILE(GLOB_RECURSE source_files "source/*")
 ADD_LIBRARY(qt_multithread_lib STATIC ${source_files})
 TARGET_INCLUDE_DIRECTORIES(qt_multithread_lib PUBLIC "include/")
-TARGET_LINK_LIBRARIES(qt_multithread_lib PUBLIC Qt5::Widgets)
+TARGET_LINK_LIBRARIES(qt_multithread_lib PUBLIC Qt5::Widgets)]]
 
-ADD_EXECUTABLE(QTMultithread main.cpp mainwindow.cpp mainwindow.h)
-TARGET_LINK_LIBRARIES(QTMultithread PUBLIC qt_multithread_lib)
+ADD_EXECUTABLE(QTMultithread main.cpp mainwindow.cpp mainwindow.h Controller.cpp Controller.hpp Worker.cpp Worker.hpp)
+TARGET_LINK_LIBRARIES(QTMultithread PUBLIC Qt5::Widgets)
