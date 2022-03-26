@@ -1,23 +1,24 @@
 #include "Controller.hpp"
 #include <iostream>
 
-namespace qt_multithread{
-Controller::Controller(qt_multithread::Worker *worker) {
-    _worker = worker;
-    worker->moveToThread(&_workerThread);
+namespace qt_multithread {
+    Controller::Controller(Worker *worker) {
+        _worker = worker;
+        _worker->moveToThread(&_workerThread);
 
-    connect(&_workerThread, &QThread::finished, _worker, &QObject::deleteLater);
-    connect(this, &Controller::workerStart, _worker, &qt_multithread::Worker::startWork);
-    connect(_worker, &qt_multithread::Worker::resultReady, this, &Controller::handleWorkerResults);
-    connect(_worker, &qt_multithread::Worker::statusReady, this, &Controller::handleWorkerStatus);
+        connect(&_workerThread, &QThread::finished, _worker, &QObject::deleteLater);
+        connect(this, &Controller::workerStart, _worker, &qt_multithread::Worker::startWork);
+        connect(_worker, &qt_multithread::Worker::resultReady, this, &Controller::handleWorkerResults);
+        connect(_worker, &qt_multithread::Worker::statusReady, this, &Controller::handleWorkerStatus);
 
-    _workerThread.start();
-}
+        _workerThread.start();
+
+    }
 
 
-void Controller::handleWorkerResults(const QString& result) {
-    emit sendWorkerResult(result);
-}
+    void Controller::handleWorkerResults(const QString &result) {
+        emit sendWorkerResult(result);
+    }
 
     Controller::~Controller() {
         _workerThread.quit();
@@ -39,5 +40,6 @@ void Controller::handleWorkerResults(const QString& result) {
     void Controller::handleWorkerStatus(float status) {
         emit sendWorkerStatus(status);
     }
+
 
 }

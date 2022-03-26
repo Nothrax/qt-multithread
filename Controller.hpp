@@ -7,9 +7,9 @@ namespace qt_multithread{
         QThread _workerThread;
     public:
         explicit Controller(Worker *worker);
-        ~Controller() override;
+        ~Controller();
     signals:
-        void workerStart();
+        void workerStart(int arg1, int arg2);
         void sendWorkerResult(const QString& result);
         void sendWorkerStatus(float status);
 

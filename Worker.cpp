@@ -4,12 +4,12 @@
 #include <chrono>
 #include <thread>
 
-void qt_multithread::Worker::startWork() {
+void qt_multithread::Worker::startWork(int arg1, int arg2) {
     std::cout << "Starting work ..." << std::endl;
     _work = true;
     _wait = false;
-    int stepNumber = 0;
-    int numberOfSteps = 5;
+    resetWorker(arg1, arg2);
+    int percentDone{0};
 
     while(_work.load()){
         if(_wait.load()){
@@ -18,10 +18,10 @@ void qt_multithread::Worker::startWork() {
             _cv.wait(lk);
             std::cout << "Continuing work ..." << std::endl;
         }else{
-            if(stepNumber < numberOfSteps){
-                doStep();
-                stepNumber++;
-                emit statusReady(100*((float)stepNumber/(float)numberOfSteps));
+            if(percentDone != 100){
+                percentDone = doStep();
+
+                emit statusReady(percentDone);
             }else{
                 std::cout << "Work done ..." << std::endl;
                 _work = false;
@@ -29,7 +29,7 @@ void qt_multithread::Worker::startWork() {
         }
     }
 
-    emit resultReady(QString(rand() % 1000));
+    emit resultReady(_result);
 }
 
 void qt_multithread::Worker::stopWork() {
@@ -43,7 +43,9 @@ void qt_multithread::Worker::stopWork() {
 
 int qt_multithread::Worker::doStep() {
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    _result = "Generic worker";
     std::cout << "I did step!" << std::endl;
+    return 100;
 }
 
 void qt_multithread::Worker::pauseWork() {

@@ -12,7 +12,7 @@ namespace qt_multithread{
         void statusReady(float status);
 
     public slots:
-        void startWork();
+        void startWork(int arg1, int arg2);
         void stopWork();
         void pauseWork();
         void continueWork();
@@ -23,6 +23,10 @@ namespace qt_multithread{
         std::mutex _mutex;
         std::condition_variable _cv;
 
+    protected:
+        QString _result;
+
+        virtual void resetWorker(int arg1, int arg2){};
         virtual int doStep();
 
     };

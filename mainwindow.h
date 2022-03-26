@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QProgressBar>
+#include <QLineEdit>
 #include "Controller.hpp"
 
 
@@ -39,23 +40,31 @@ private:
 
     QLabel *_primeLabel;
     QLabel *_factorialLabel;
-    QLabel *_primeStateLabel;
-    QLabel *_factorialStateLabel;
+    QLabel *_primeOutputLabel;
+    QLabel *_factorialOutputLabel;
 
-    QPushButton *_primeStart;
-    QPushButton *_factorialStart;
+    QLabel *_factorialEditLabel;
+    QLineEdit *_factorialEdit;
 
-    QPushButton *_primeStop;
-    QPushButton *_factorialStop;
+    QLabel *_primeMinEditLabel;
+    QLabel *_primeMaxEditLabel;
+    QLineEdit *_primeMinEdit;
+    QLineEdit *_primeMaxEdit;
 
-    QPushButton *_primePause;
-    QPushButton *_factorialPause;
+    QPushButton *_primeStartButton;
+    QPushButton *_factorialStartButton;
 
-    QPushButton *_primeContinue;
-    QPushButton *_factorialContinue;
+    QPushButton *_primeStopButton;
+    QPushButton *_factorialStopButton;
 
-    QProgressBar *_primeProgressBar;
-    QProgressBar *_factorialProgressBar;
+    QPushButton *_primePauseButton;
+    QPushButton *_factorialPauseButton;
+
+    QPushButton *_primeContinueButton;
+    QPushButton *_factorialContinueButton;
+
+    QProgressBar *_primeProgressBarButton;
+    QProgressBar *_factorialProgressBarButton;
 
     int _primeStatus;
     int _factorialStatus;
