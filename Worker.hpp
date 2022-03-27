@@ -18,13 +18,13 @@ namespace qt_multithread{
         void continueWork();
 
     private:
-        std::atomic<bool> _work{true};
-        std::atomic<bool> _wait{false};
-        std::mutex _mutex;
-        std::condition_variable _cv;
+        std::atomic<bool> work_{true};
+        std::atomic<bool> wait_{false};
+        std::mutex mutex_;
+        std::condition_variable cv_;
 
     protected:
-        QString _result;
+        QString result_;
 
         virtual void resetWorker(int arg1, int arg2){};
         virtual int doStep();

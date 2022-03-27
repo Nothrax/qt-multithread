@@ -4,7 +4,7 @@
 namespace qt_multithread{
     class Controller : public QObject {
         Q_OBJECT
-        QThread _workerThread;
+        QThread workerThread_;
     public:
         explicit Controller(Worker *worker);
         ~Controller();
@@ -21,7 +21,7 @@ namespace qt_multithread{
         void workerContinue();
 
     private:
-        Worker *_worker;
+        Worker *worker_;
 
     };
 }

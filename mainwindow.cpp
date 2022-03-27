@@ -11,128 +11,128 @@ MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent)
 {
     auto primeWorker = new qt_multithread::PrimeNumberWorker;
-    _controllerPrime = new qt_multithread::Controller(primeWorker);
-    connect(_controllerPrime, &qt_multithread::Controller::sendWorkerResult, this, &MainWindow::handlePrimeResults);
-    connect(_controllerPrime, &qt_multithread::Controller::sendWorkerStatus, this, &MainWindow::handlePrimeStatus);
+    controllerPrime_ = new qt_multithread::Controller(primeWorker);
+    connect(controllerPrime_, &qt_multithread::Controller::sendWorkerResult, this, &MainWindow::handlePrimeResults);
+    connect(controllerPrime_, &qt_multithread::Controller::sendWorkerStatus, this, &MainWindow::handlePrimeStatus);
 
     auto factorialWorker = new qt_multithread::FactorialWorker;
-    _controllerFactorial = new qt_multithread::Controller(factorialWorker);
-    connect(_controllerFactorial, &qt_multithread::Controller::sendWorkerResult, this, &MainWindow::handleFactorialResults);
-    connect(_controllerFactorial, &qt_multithread::Controller::sendWorkerStatus, this, &MainWindow::handleFactorialStatus);
+    controllerFactorial_ = new qt_multithread::Controller(factorialWorker);
+    connect(controllerFactorial_, &qt_multithread::Controller::sendWorkerResult, this, &MainWindow::handleFactorialResults);
+    connect(controllerFactorial_, &qt_multithread::Controller::sendWorkerStatus, this, &MainWindow::handleFactorialStatus);
 
 
-    _primeLabel = new QLabel{"Prime worker: stopped", this};
-    _primeLabel->setGeometry(0, 0,400, 40);
-    _primeLabel->setAlignment(Qt::AlignCenter);
-    _primeStartButton = new QPushButton("start", this);
-    _primeStartButton->setGeometry(QRect(QPoint(0, 40),
+    primeLabel_ = new QLabel{"Prime worker: stopped", this};
+    primeLabel_->setGeometry(0, 0, 400, 40);
+    primeLabel_->setAlignment(Qt::AlignCenter);
+    primeStartButton_ = new QPushButton("start", this);
+    primeStartButton_->setGeometry(QRect(QPoint(0, 40),
                                          QSize(100, 40)));
-    connect(_primeStartButton, SIGNAL (released()), this, SLOT (primeStart()));
+    connect(primeStartButton_, SIGNAL (released()), this, SLOT (primeStart()));
 
-    _primeStopButton = new QPushButton("stop", this);
-    _primeStopButton->setGeometry(QRect(QPoint(100, 40),
+    primeStopButton_ = new QPushButton("stop", this);
+    primeStopButton_->setGeometry(QRect(QPoint(100, 40),
                                         QSize(100, 40)));
-    connect(_primeStopButton, SIGNAL (released()), this, SLOT (primeStop()));
-    _primeStopButton->setEnabled(false);
+    connect(primeStopButton_, SIGNAL (released()), this, SLOT (primeStop()));
+    primeStopButton_->setEnabled(false);
 
-    _primePauseButton = new QPushButton("pause", this);
-    _primePauseButton->setGeometry(QRect(QPoint(200, 40),
+    primePauseButton_ = new QPushButton("pause", this);
+    primePauseButton_->setGeometry(QRect(QPoint(200, 40),
                                          QSize(100, 40)));
-    connect(_primePauseButton, SIGNAL (released()), this, SLOT (primePause()));
-    _primePauseButton->setEnabled(false);
+    connect(primePauseButton_, SIGNAL (released()), this, SLOT (primePause()));
+    primePauseButton_->setEnabled(false);
 
-    _primeContinueButton = new QPushButton("continue", this);
-    _primeContinueButton->setGeometry(QRect(QPoint(300, 40),
+    primeContinueButton_ = new QPushButton("continue", this);
+    primeContinueButton_->setGeometry(QRect(QPoint(300, 40),
                                             QSize(100, 40)));
-    connect(_primeContinueButton, SIGNAL (released()), this, SLOT (primeContinue()));
-    _primeContinueButton->setEnabled(false);
+    connect(primeContinueButton_, SIGNAL (released()), this, SLOT (primeContinue()));
+    primeContinueButton_->setEnabled(false);
 
-    _primeProgressBarButton = new QProgressBar(this);
-    _primeProgressBarButton->setGeometry(QRect(QPoint(0, 80),
+    primeProgressBarButton_ = new QProgressBar(this);
+    primeProgressBarButton_->setGeometry(QRect(QPoint(0, 80),
                                                QSize(400, 40)));
-    _primeProgressBarButton->setRange(0, 100);
-    _primeProgressBarButton->setValue(0);
+    primeProgressBarButton_->setRange(0, 100);
+    primeProgressBarButton_->setValue(0);
 
-    _primeMinEditLabel = new QLabel("From: ", this);
-    _primeMinEditLabel->setGeometry(QRect(QPoint(0, 120),
-                                           QSize(100, 40)));
-    _primeMinEditLabel->setAlignment( Qt::AlignCenter);
-
-    _primeMaxEditLabel = new QLabel("To: ", this);
-    _primeMaxEditLabel->setGeometry(QRect(QPoint(200, 120),
+    primeMinEditLabel_ = new QLabel("From: ", this);
+    primeMinEditLabel_->setGeometry(QRect(QPoint(0, 120),
                                           QSize(100, 40)));
-    _primeMaxEditLabel->setAlignment( Qt::AlignCenter);
+    primeMinEditLabel_->setAlignment(Qt::AlignCenter);
 
-    _primeMinEdit = new QLineEdit(this);
-    _primeMinEdit->setGeometry(QRect(QPoint(100, 120),
-                                      QSize(100, 40)));
-    _primeMinEdit->setText("0");
-    _primeMinEdit->setAlignment( Qt::AlignCenter);
-    _primeMinEdit->setValidator( new QIntValidator(0, INT16_MAX, this) );
+    primeMaxEditLabel_ = new QLabel("To: ", this);
+    primeMaxEditLabel_->setGeometry(QRect(QPoint(200, 120),
+                                          QSize(100, 40)));
+    primeMaxEditLabel_->setAlignment(Qt::AlignCenter);
 
-    _primeMaxEdit = new QLineEdit(this);
-    _primeMaxEdit->setGeometry(QRect(QPoint(300, 120),
+    primeMinEdit_ = new QLineEdit(this);
+    primeMinEdit_->setGeometry(QRect(QPoint(100, 120),
                                      QSize(100, 40)));
-    _primeMaxEdit->setText("0");
-    _primeMaxEdit->setAlignment( Qt::AlignCenter);
-    _primeMaxEdit->setValidator( new QIntValidator(0, INT16_MAX, this) );
+    primeMinEdit_->setText("0");
+    primeMinEdit_->setAlignment(Qt::AlignCenter);
+    primeMinEdit_->setValidator(new QIntValidator(0, INT32_MAX, this) );
+
+    primeMaxEdit_ = new QLineEdit(this);
+    primeMaxEdit_->setGeometry(QRect(QPoint(300, 120),
+                                     QSize(100, 40)));
+    primeMaxEdit_->setText("0");
+    primeMaxEdit_->setAlignment(Qt::AlignCenter);
+    primeMaxEdit_->setValidator(new QIntValidator(0, INT32_MAX, this) );
 
 
-    _primeOutputLabel = new QLabel("Prime output", this);
-    _primeOutputLabel->setGeometry(0, 160,400, 440);
-    _primeOutputLabel->setStyleSheet("QLabel { background-color : red; color : blue; }");
-    _primeOutputLabel->setAlignment(Qt::AlignHCenter);
+    primeOutputLabel_ = new QLabel("Prime output", this);
+    primeOutputLabel_->setGeometry(0, 160, 400, 440);
+    primeOutputLabel_->setStyleSheet("QLabel { background-color : red; color : blue; }");
+    primeOutputLabel_->setAlignment(Qt::AlignHCenter);
 
     ///factorial layout
 
-    _factorialLabel = new QLabel{"Factorial worker: stopped", this};
-    _factorialLabel->setGeometry(400, 0,450, 40);
-    _factorialLabel->setAlignment(Qt::AlignCenter);
+    factorialLabel_ = new QLabel{"Factorial worker: stopped", this};
+    factorialLabel_->setGeometry(400, 0, 450, 40);
+    factorialLabel_->setAlignment(Qt::AlignCenter);
 
-    _factorialStartButton = new QPushButton("start", this);
-    _factorialStartButton->setGeometry(QRect(QPoint(450, 40),
+    factorialStartButton_ = new QPushButton("start", this);
+    factorialStartButton_->setGeometry(QRect(QPoint(450, 40),
                                              QSize(100, 40)));
-    connect(_factorialStartButton, SIGNAL (released()), this, SLOT (factorialStart()));
-    _factorialStopButton = new QPushButton("stop", this);
-    _factorialStopButton->setGeometry(QRect(QPoint(550, 40),
+    connect(factorialStartButton_, SIGNAL (released()), this, SLOT (factorialStart()));
+    factorialStopButton_ = new QPushButton("stop", this);
+    factorialStopButton_->setGeometry(QRect(QPoint(550, 40),
                                             QSize(100, 40)));
-    connect(_factorialStopButton, SIGNAL (released()), this, SLOT (factorialStop()));
-    _factorialStopButton->setEnabled(false);
+    connect(factorialStopButton_, SIGNAL (released()), this, SLOT (factorialStop()));
+    factorialStopButton_->setEnabled(false);
 
-    _factorialPauseButton = new QPushButton("pause", this);
-    _factorialPauseButton->setGeometry(QRect(QPoint(650, 40),
+    factorialPauseButton_ = new QPushButton("pause", this);
+    factorialPauseButton_->setGeometry(QRect(QPoint(650, 40),
                                              QSize(100, 40)));
-    connect(_factorialPauseButton, SIGNAL (released()), this, SLOT (factorialPause()));
-    _factorialPauseButton->setEnabled(false);
+    connect(factorialPauseButton_, SIGNAL (released()), this, SLOT (factorialPause()));
+    factorialPauseButton_->setEnabled(false);
 
-    _factorialContinueButton = new QPushButton("continue", this);
-    _factorialContinueButton->setGeometry(QRect(QPoint(750, 40),
+    factorialContinueButton_ = new QPushButton("continue", this);
+    factorialContinueButton_->setGeometry(QRect(QPoint(750, 40),
                                                 QSize(100, 40)));
-    connect(_factorialContinueButton, SIGNAL (released()), this, SLOT (factorialContinue()));
-    _factorialContinueButton->setEnabled(false);
+    connect(factorialContinueButton_, SIGNAL (released()), this, SLOT (factorialContinue()));
+    factorialContinueButton_->setEnabled(false);
 
-    _factorialProgressBarButton = new QProgressBar(this);
-    _factorialProgressBarButton->setGeometry(QRect(QPoint(450, 80),
+    factorialProgressBarButton_ = new QProgressBar(this);
+    factorialProgressBarButton_->setGeometry(QRect(QPoint(450, 80),
                                                    QSize(400, 40)));
-    _factorialProgressBarButton->setRange(0, 100);
-    _factorialProgressBarButton->setValue(0);
+    factorialProgressBarButton_->setRange(0, 100);
+    factorialProgressBarButton_->setValue(0);
 
-    _factorialEditLabel = new QLabel("Factorial number: ", this);
-    _factorialEditLabel->setGeometry(QRect(QPoint(450, 120),
+    factorialEditLabel_ = new QLabel("Factorial number: ", this);
+    factorialEditLabel_->setGeometry(QRect(QPoint(450, 120),
                                            QSize(200, 40)));
-    _factorialEditLabel->setAlignment( Qt::AlignCenter);
+    factorialEditLabel_->setAlignment(Qt::AlignCenter);
 
-    _factorialEdit = new QLineEdit(this);
-    _factorialEdit->setGeometry(QRect(QPoint(650, 120),
+    factorialEdit_ = new QLineEdit(this);
+    factorialEdit_->setGeometry(QRect(QPoint(650, 120),
                                       QSize(200, 40)));
-    _factorialEdit->setText("0");
-    _factorialEdit->setAlignment( Qt::AlignCenter);
-    _factorialEdit->setValidator( new QIntValidator(1, INT16_MAX, this) );
+    factorialEdit_->setText("0");
+    factorialEdit_->setAlignment(Qt::AlignCenter);
+    factorialEdit_->setValidator(new QIntValidator(1, INT16_MAX, this) );
 
-    _factorialOutputLabel = new QLabel("Factorial output", this);
-    _factorialOutputLabel->setGeometry(450, 160,400, 440);
-    _factorialOutputLabel->setStyleSheet("QLabel { background-color : blue; color : red; }");
-    _factorialOutputLabel->setAlignment( Qt::AlignHCenter);
+    factorialOutputLabel_ = new QLabel("Factorial output", this);
+    factorialOutputLabel_->setGeometry(450, 160, 400, 440);
+    factorialOutputLabel_->setStyleSheet("QLabel { background-color : blue; color : red; }");
+    factorialOutputLabel_->setAlignment(Qt::AlignHCenter);
 }
 
 MainWindow::~MainWindow()
@@ -142,133 +142,130 @@ MainWindow::~MainWindow()
 
 void MainWindow::handlePrimeResults(const QString& result) {
     std::cout << result.toStdString() << std::endl;
-    _primeOutputLabel->setText(result);
-    _primeStartButton->setEnabled(true);
-    _primeStopButton->setEnabled(false);
-    _primePauseButton->setEnabled(false);
-    _primeContinueButton->setEnabled(false);
-    if(_primeStatus > 99){
-        _primeLabel->setText("Prime worker: Done!");
+    primeOutputLabel_->setText(result);
+    primeOutputLabel_->setWordWrap(true);
+
+    primeStartButton_->setEnabled(true);
+    primeStopButton_->setEnabled(false);
+    primePauseButton_->setEnabled(false);
+    primeContinueButton_->setEnabled(false);
+    if(primeStatus_ > 99){
+        primeLabel_->setText("Prime worker: Done!");
     }
 }
 
 void MainWindow::handleFactorialResults(const QString& result) {
     std::cout << result.toStdString() << std::endl;
-    _factorialOutputLabel->setWordWrap(true);
-    _factorialOutputLabel->setText(result);
-    _factorialStartButton->setEnabled(true);
-    _factorialStopButton->setEnabled(false);
-    _factorialPauseButton->setEnabled(false);
-    _factorialContinueButton->setEnabled(false);
-    if(_factorialStatus > 99){
-        _factorialLabel->setText("Factorial worker: Done!");
+    factorialOutputLabel_->setWordWrap(true);
+    factorialOutputLabel_->setText(result);
+    factorialStartButton_->setEnabled(true);
+    factorialStopButton_->setEnabled(false);
+    factorialPauseButton_->setEnabled(false);
+    factorialContinueButton_->setEnabled(false);
+    if(factorialStatus_ > 99){
+        factorialLabel_->setText("Factorial worker: Done!");
     }
 
 }
 
 void MainWindow::primeStart() {
-    if(_primeMinEdit->text().toInt() > _primeMaxEdit->text().toInt()){
+    if(primeMinEdit_->text().toInt() > primeMaxEdit_->text().toInt()){
         QMessageBox messageBox;
         messageBox.critical(this,"Error","From must be smaller than to!");
         messageBox.setFixedSize(100,100);
     }else{
-        //auto workerPrime = new qt_multithread::PrimeNumberWorker();
-        //_controllerPrime->setWorker(workerPrime);
-
-        _controllerPrime->workerStart(_primeMinEdit->text().toInt(),_primeMaxEdit->text().toInt());
-        _primeStartButton->setEnabled(false);
-        _primeStopButton->setEnabled(true);
-        _primePauseButton->setEnabled(true);
-        _primeContinueButton->setEnabled(false);
-        _primeLabel->setText("Prime worker: Calculating");
-        _primeProgressBarButton->setValue(0);
+        controllerPrime_->workerStart(primeMinEdit_->text().toInt(), primeMaxEdit_->text().toInt());
+        primeStartButton_->setEnabled(false);
+        primeStopButton_->setEnabled(true);
+        primePauseButton_->setEnabled(true);
+        primeContinueButton_->setEnabled(false);
+        primeLabel_->setText("Prime worker: Calculating");
+        primeProgressBarButton_->setValue(0);
     }
 }
 
 void MainWindow::primeStop() {
-    _controllerPrime->workerStop();
-    _primeStartButton->setEnabled(true);
-    _primeStopButton->setEnabled(false);
-    _primePauseButton->setEnabled(false);
-    _primeContinueButton->setEnabled(false);
-    _primeLabel->setText("Prime worker: Stopped");
-    _primeProgressBarButton->setValue(0);
+    controllerPrime_->workerStop();
+    primeStartButton_->setEnabled(true);
+    primeStopButton_->setEnabled(false);
+    primePauseButton_->setEnabled(false);
+    primeContinueButton_->setEnabled(false);
+    primeLabel_->setText("Prime worker: Stopped");
+    primeProgressBarButton_->setValue(0);
 }
 
 void MainWindow::primePause() {
-    _controllerPrime->workerPause();
-    _primeStartButton->setEnabled(false);
-    _primeStopButton->setEnabled(true);
-    _primePauseButton->setEnabled(false);
-    _primeContinueButton->setEnabled(true);
-    _primeLabel->setText("Prime worker: Paused");
+    controllerPrime_->workerPause();
+    primeStartButton_->setEnabled(false);
+    primeStopButton_->setEnabled(true);
+    primePauseButton_->setEnabled(false);
+    primeContinueButton_->setEnabled(true);
+    primeLabel_->setText("Prime worker: Paused");
 }
 
 void MainWindow::primeContinue() {
-    _controllerPrime->workerContinue();
-    _primeStartButton->setEnabled(false);
-    _primeStopButton->setEnabled(true);
-    _primePauseButton->setEnabled(true);
-    _primeContinueButton->setEnabled(false);
-    _primeLabel->setText("Prime worker: Calculating");
+    controllerPrime_->workerContinue();
+    primeStartButton_->setEnabled(false);
+    primeStopButton_->setEnabled(true);
+    primePauseButton_->setEnabled(true);
+    primeContinueButton_->setEnabled(false);
+    primeLabel_->setText("Prime worker: Calculating");
 }
 
 void MainWindow::factorialStart() {
-    if(_factorialEdit->text().toInt() > MAX_FACTORIAL){
+    if(factorialEdit_->text().toInt() > MAX_FACTORIAL){
         QMessageBox messageBox;
         messageBox.critical(this,"Error","Maximum factorial size supported is " + QString::number(MAX_FACTORIAL));
         messageBox.setFixedSize(100,100);
     }else{
-        //auto workerFactorial = new qt_multithread::FactorialWorker(_factorialEdit->text().toInt());
-        //_controllerFactorial->setWorker(workerFactorial);
-        _controllerFactorial->workerStart(_factorialEdit->text().toInt(),0);
-        _factorialStartButton->setEnabled(false);
-        _factorialStopButton->setEnabled(true);
-        _factorialPauseButton->setEnabled(true);
-        _factorialContinueButton->setEnabled(false);
-        _factorialLabel->setText("Factorial worker: Calculating");
-        _factorialProgressBarButton->setValue(0);
+        controllerFactorial_->workerStart(factorialEdit_->text().toInt(), 0);
+        factorialStartButton_->setEnabled(false);
+        factorialStopButton_->setEnabled(true);
+        factorialPauseButton_->setEnabled(true);
+        factorialContinueButton_->setEnabled(false);
+        factorialLabel_->setText("Factorial worker: Calculating");
+        factorialProgressBarButton_->setValue(0);
     }
 }
 
 void MainWindow::factorialStop() {
-    _controllerFactorial->workerStop();
-    _factorialStartButton->setEnabled(true);
-    _factorialStopButton->setEnabled(false);
-    _factorialPauseButton->setEnabled(false);
-    _factorialContinueButton->setEnabled(false);
-    _factorialLabel->setText("Factorial worker: Stopped");
-    _factorialProgressBarButton->setValue(0);
+    controllerFactorial_->workerStop();
+    factorialStartButton_->setEnabled(true);
+    factorialStopButton_->setEnabled(false);
+    factorialPauseButton_->setEnabled(false);
+    factorialContinueButton_->setEnabled(false);
+    factorialLabel_->setText("Factorial worker: Stopped");
+    factorialProgressBarButton_->setValue(0);
 }
 
 void MainWindow::factorialPause() {
-    _controllerFactorial->workerPause();
-    _factorialStartButton->setEnabled(false);
-    _factorialStopButton->setEnabled(true);
-    _factorialPauseButton->setEnabled(false);
-    _factorialContinueButton->setEnabled(true);
-    _factorialLabel->setText("Factorial worker: Paused");
+    controllerFactorial_->workerPause();
+    factorialStartButton_->setEnabled(false);
+    factorialStopButton_->setEnabled(true);
+    factorialPauseButton_->setEnabled(false);
+    factorialContinueButton_->setEnabled(true);
+    factorialLabel_->setText("Factorial worker: Paused");
 }
 
 void MainWindow::factorialContinue() {
-    _controllerFactorial->workerContinue();
-    _factorialStartButton->setEnabled(false);
-    _factorialStopButton->setEnabled(true);
-    _factorialPauseButton->setEnabled(true);
-    _factorialContinueButton->setEnabled(false);
-    _factorialLabel->setText("Factorial worker: Calculating");
+    controllerFactorial_->workerContinue();
+    factorialStartButton_->setEnabled(false);
+    factorialStopButton_->setEnabled(true);
+    factorialPauseButton_->setEnabled(true);
+    factorialContinueButton_->setEnabled(false);
+    factorialLabel_->setText("Factorial worker: Calculating");
 }
 
 void MainWindow::handlePrimeStatus(float status) {
-    std::cout << "prime status = " << status << std::endl;
-    _primeStatus = status;
-    _primeProgressBarButton->setValue(status);
+    //std::cout << "prime status = " << status << std::endl;
+    primeStatus_ = status;
+    primeProgressBarButton_->setValue(status);
 }
 
 void MainWindow::handleFactorialStatus(float status) {
     std::cout << "factorial status = " << status << std::endl;
-    _factorialStatus = status;
-    _factorialProgressBarButton->setValue(status);
+    factorialStatus_ = status;
+    factorialProgressBarButton_->setValue(status);
 }
 
 

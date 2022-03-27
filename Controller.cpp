@@ -3,15 +3,15 @@
 
 namespace qt_multithread {
     Controller::Controller(Worker *worker) {
-        _worker = worker;
-        _worker->moveToThread(&_workerThread);
+        worker_ = worker;
+        worker_->moveToThread(&workerThread_);
 
-        connect(&_workerThread, &QThread::finished, _worker, &QObject::deleteLater);
-        connect(this, &Controller::workerStart, _worker, &qt_multithread::Worker::startWork);
-        connect(_worker, &qt_multithread::Worker::resultReady, this, &Controller::handleWorkerResults);
-        connect(_worker, &qt_multithread::Worker::statusReady, this, &Controller::handleWorkerStatus);
+        connect(&workerThread_, &QThread::finished, worker_, &QObject::deleteLater);
+        connect(this, &Controller::workerStart, worker_, &qt_multithread::Worker::startWork);
+        connect(worker_, &qt_multithread::Worker::resultReady, this, &Controller::handleWorkerResults);
+        connect(worker_, &qt_multithread::Worker::statusReady, this, &Controller::handleWorkerStatus);
 
-        _workerThread.start();
+        workerThread_.start();
 
     }
 
@@ -21,20 +21,20 @@ namespace qt_multithread {
     }
 
     Controller::~Controller() {
-        _workerThread.quit();
-        _workerThread.wait();
+        workerThread_.quit();
+        workerThread_.wait();
     }
 
     void Controller::workerStop() {
-        _worker->stopWork();
+        worker_->stopWork();
     }
 
     void Controller::workerPause() {
-        _worker->pauseWork();
+        worker_->pauseWork();
     }
 
     void Controller::workerContinue() {
-        _worker->continueWork();
+        worker_->continueWork();
     }
 
     void Controller::handleWorkerStatus(float status) {

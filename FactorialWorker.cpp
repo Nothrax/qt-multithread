@@ -3,8 +3,8 @@
 
 int qt_multithread::FactorialWorker::doStep() {
 
-    if(_factorial < 2){
-        _result = "Factorial worker, factorial calculated from: " + QString::number(_factorial) + " result is: 1";
+    if(factorial_ < 2){
+        result_ = "Factorial worker, factorial calculated from: " + QString::number(factorial_) + " result is: 1";
         return 100;
     }
 
@@ -12,26 +12,26 @@ int qt_multithread::FactorialWorker::doStep() {
 
     int carry = 0;
 
-    for (int i=0; i<_resSize; i++)
+    for (int i=0; i < resSize_; i++)
     {
-        int prod = _res[i] * _step + carry;
-        _res[i] = prod % 10;
+        int prod = res_[i] * step_ + carry;
+        res_[i] = prod % 10;
         carry  = prod/10;
     }
     while (carry)
     {
-        _res[_resSize] = carry % 10;
+        res_[resSize_] = carry % 10;
         carry = carry/10;
-        _resSize++;
+        resSize_++;
     }
 
-    if(_step == _factorial){
-        _result = "Factorial worker, factorial calculated from: " + QString::number(_factorial) + " result is: ";
+    if(step_ == factorial_){
+        result_ = "Factorial worker, factorial calculated from: " + QString::number(factorial_) + " result is: ";
         int spaceCounter = 0;
-        for(int i = _resSize-1; i >=0;i--){
-            _result += QString::number(_res[i]);
+        for(int i = resSize_ - 1; i >= 0; i--){
+            result_ += QString::number(res_[i]);
             if(spaceCounter > 40){
-                _result+="\n";
+                result_+="\n";
                 spaceCounter = 0;
             }
             spaceCounter++;
@@ -39,16 +39,16 @@ int qt_multithread::FactorialWorker::doStep() {
         return 100;
     }
 
-    int percentDone = (float)(((float)_step)/((float)_factorial)*100);
+    int percentDone = (float)(((float)step_) / ((float)factorial_) * 100);
     if(percentDone == 100) percentDone--;
-    _step++;
+    step_++;
     return percentDone;
 }
 
 void qt_multithread::FactorialWorker::resetWorker(int arg1, int arg2) {
     std::cout << "reseting worker to " << std::to_string(arg1) << std::endl;
-    _factorial = arg1;
-    _res[0] = 1;
-    _step = 1;
-    _resSize = 1;
+    factorial_ = arg1;
+    res_[0] = 1;
+    step_ = 1;
+    resSize_ = 1;
 }

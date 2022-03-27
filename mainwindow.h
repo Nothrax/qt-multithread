@@ -35,37 +35,37 @@ public slots:
     void factorialContinue();
 
 private:
-    qt_multithread::Controller *_controllerPrime;
-    qt_multithread::Controller *_controllerFactorial;
+    qt_multithread::Controller *controllerPrime_;
+    qt_multithread::Controller *controllerFactorial_;
 
-    QLabel *_primeLabel;
-    QLabel *_factorialLabel;
-    QLabel *_primeOutputLabel;
-    QLabel *_factorialOutputLabel;
+    QLabel *primeLabel_;
+    QLabel *factorialLabel_;
+    QLabel *primeOutputLabel_;
+    QLabel *factorialOutputLabel_;
 
-    QLabel *_factorialEditLabel;
-    QLineEdit *_factorialEdit;
+    QLabel *factorialEditLabel_;
+    QLineEdit *factorialEdit_;
 
-    QLabel *_primeMinEditLabel;
-    QLabel *_primeMaxEditLabel;
-    QLineEdit *_primeMinEdit;
-    QLineEdit *_primeMaxEdit;
+    QLabel *primeMinEditLabel_;
+    QLabel *primeMaxEditLabel_;
+    QLineEdit *primeMinEdit_;
+    QLineEdit *primeMaxEdit_;
 
-    QPushButton *_primeStartButton;
-    QPushButton *_factorialStartButton;
+    QPushButton *primeStartButton_;
+    QPushButton *factorialStartButton_;
 
-    QPushButton *_primeStopButton;
-    QPushButton *_factorialStopButton;
+    QPushButton *primeStopButton_;
+    QPushButton *factorialStopButton_;
 
-    QPushButton *_primePauseButton;
-    QPushButton *_factorialPauseButton;
+    QPushButton *primePauseButton_;
+    QPushButton *factorialPauseButton_;
 
-    QPushButton *_primeContinueButton;
-    QPushButton *_factorialContinueButton;
+    QPushButton *primeContinueButton_;
+    QPushButton *factorialContinueButton_;
 
-    QProgressBar *_primeProgressBarButton;
-    QProgressBar *_factorialProgressBarButton;
+    QProgressBar *primeProgressBarButton_;
+    QProgressBar *factorialProgressBarButton_;
 
-    int _primeStatus;
-    int _factorialStatus;
+    int primeStatus_;
+    int factorialStatus_;
 };
