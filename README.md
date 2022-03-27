@@ -1,5 +1,5 @@
 # QT QThread functionality presentation
-Written and tested on ubuntu 20.04.
+Written and tested on ubuntu 20.04. ![gui](images/gui.png)
 
 # Prerequisites
 * cmake >= 3.20
