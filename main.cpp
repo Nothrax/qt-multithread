@@ -1,15 +1,11 @@
-#include <iostream>
-#include <qt_multithread/PrimeNumberWorker.hpp>
-#include <qt_multithread/FactorialWorker.hpp>
-#include <qt_multithread/Worker.hpp>
+#include "mainwindow.h"
+#include <QApplication>
 
 int main(int argc, char** argv){
-    qt_multithread::Worker worker;
-    worker.startWork();
-    worker.pauseWork();
-    worker.continueWork();
-    worker.stopWork();
+    QApplication app(argc, argv);
+    MainWindow mainWindow;
+    mainWindow.setFixedSize(850,600);
+    mainWindow.show();
 
-    std::cout << "Let's go" << std::endl;
-    return EXIT_SUCCESS;
+    return QApplication::exec();
 }
